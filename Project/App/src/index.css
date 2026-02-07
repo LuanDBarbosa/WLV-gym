@@ -1,0 +1,47 @@
+.feature{
+  font-family:Arial,sans-serif;
+  border-radius: 10px;
+  border: 1px solid hsl(0,0%,80%);
+  box-shadow: 5px 5px 5px hsla(0,0%,0%,0.1);
+  margin: 15px;
+  padding: 5px;
+  display: inline-block;
+  text-align: left;
+  transition: 0.2s all;
+  position: relative;
+  width: 350px;
+  height: 250px;
+  background-color: white;
+
+}
+.feature:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+        /* Lowering the shadow */
+} 
+
+.feature .feature-title{
+    color: hsl(163, 100%, 20%);
+    padding: 6px;
+}
+
+.feature .feature-text{
+    color: hsl(240, 100%, 50%);
+    padding: 5px;
+}
+
+.feature .feature-img{
+    max-width: 100%;
+    height: auto;
+}
+
+h1{
+    font-family:Arial,sans-serif;
+    text-align: center;
+    background-color: hsl(1, 1%, 90%);
+    padding: 10px;
+    color: hsl(163, 100%, 20%);
+    border: 2px solid;
+    border-radius: 15px;
+}
