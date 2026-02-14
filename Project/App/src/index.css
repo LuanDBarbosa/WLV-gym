@@ -45,3 +45,125 @@ h1{
     border: 2px solid;
     border-radius: 15px;
 }
+
+.Input{
+    font-family:Arial,sans-serif;
+    border-radius: 10px;
+    border: 1px solid hsl(0,0%,80%);
+    position: absolute;
+    background-color: hsl(1, 1%, 90%);
+    top: 180px;
+    left: 540px;
+    width: 450px;
+    padding: 15px;
+}
+
+.Input2{
+    font-family:Arial,sans-serif;
+    border-radius: 10px;
+    border: 1px solid hsl(0,0%,80%);
+    position: absolute;
+    background-color: hsl(1, 1%, 90%);
+    top: 260px;
+    left: 540px;
+    width: 450px;
+    padding: 15px;
+}
+
+.Input3{
+    font-family:Arial,sans-serif;
+    border-radius: 10px;
+    border: 1px solid hsl(0,0%,80%);
+    position: absolute;
+    background-color: hsl(1, 1%, 90%);
+    top: 340px;
+    left: 540px;
+    width: 450px;
+    padding: 15px;
+}
+
+.cred-button{
+     font-family:Arial,sans-serif;
+     font-weight: bold;
+     font-size: 20px;
+     border-radius: 10px;
+     border: 1px solid hsl(0,0%,80%);
+     position: absolute;
+     top: 420px;
+     left: 538px;
+     width: 485px;
+     padding: 15px;
+     transition: 0.2s all;
+     background-color: hsl(163, 100%, 40%);;
+     color: white;
+     cursor: pointer;
+}
+
+.cred-button:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+} 
+
+h2{
+    font-family:Arial,sans-serif;
+    font-size: 60px;
+    position: absolute;
+    top: 13px;
+    left: 600px;
+}
+
+.user_img{
+    position: absolute;
+    top: 173px;
+    left: 965px;
+    width: 60px;
+}
+
+.user_img2{
+    position: absolute;
+    top: 258px;
+    left: 967px;
+    width: 50px;
+}
+
+.user_img3{
+    position: absolute;
+    top: 336px;
+    left: 968px;
+    width: 55px;
+}
+
+.SendToRegisterOrLogin{
+    font-family:Arial,sans-serif;
+    font-weight: bold;
+    position: absolute;
+    top: 500px;
+    left: 548px;
+}
+
+h3{
+    font-family:Arial,sans-serif;
+    font-size: 60px;
+    position: absolute;
+    top: 63px;
+    left: 690px;
+}
+
+.Input4{
+    font-family:Arial,sans-serif;
+    border-radius: 10px;
+    border: 1px solid hsl(0,0%,80%);
+    position: absolute;
+    background-color: hsl(1, 1%, 90%);
+    top: 240px;
+    left: 540px;
+    width: 450px;
+    padding: 15px;
+}
+
+.user_img4{
+    position: absolute;
+    top: 233px;
+    left: 965px;
+    width: 60px;
+}
