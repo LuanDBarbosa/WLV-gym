@@ -313,6 +313,13 @@ hr {
   color: var(--text-muted);
 }
 
+.loading-text {
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 2rem;
+}
+
 /* Lists and Tables */
 .class-item {
   display: flex;
@@ -393,6 +400,103 @@ hr {
 
 .destination { flex: 1; }
 .time-due { font-weight: 700; color: var(--primary-color); }
+
+/* Journey Planner */
+.journey-text { margin-bottom: 1rem; color: var(--text-muted); }
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #e2e8f0;
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error-message {
+  color: #991b1b;
+  background: #fee2e2;
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.journey-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.journey-card {
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
+.journey-card:hover { border-color: var(--primary-color); background: #f0fdfa; }
+
+.journey-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.journey-type { font-weight: 700; color: var(--text-main); }
+.journey-label { 
+  background: var(--primary-color); 
+  color: white; 
+  font-size: 0.75rem; 
+  padding: 0.1rem 0.5rem; 
+  border-radius: 999px; 
+}
+
+.journey-details {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+}
+
+.journey-stat { display: flex; align-items: center; gap: 0.4rem; }
+
+.journey-times {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.action-btn.small {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  width: 100%;
+}
+
+.text-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.85rem;
+  align-self: center;
+}
 
 /* Events Grid */
 .filters {
