@@ -104,7 +104,7 @@ h1{
             /* Scaling button to 0.98 to its original size */
 } 
 
-h2{
+h4{
     font-family:Arial,sans-serif;
     font-size: 60px;
     position: absolute;
@@ -166,4 +166,28 @@ h3{
     top: 233px;
     left: 965px;
     width: 60px;
+}
+
+.CheckUsername{
+    font-family:Arial,sans-serif;
+    color: red;
+    position: absolute;
+    top:220px;
+    left: 545px;
+}
+
+.CheckEmail{
+    font-family:Arial,sans-serif;
+    color: red;
+    position: absolute;
+    top:300px;
+    left: 545px;
+}
+
+.CheckPassword{
+    font-family:Arial,sans-serif;
+    color: red;
+    position: absolute;
+    top:380px;
+    left: 545px;
 }
