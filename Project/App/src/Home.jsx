@@ -1,20 +1,64 @@
+import { useState } from 'react'
+import { Dumbbell, Bus, Calendar, BookOpen, Search } from 'lucide-react'
 import Feature from "./Feature.jsx"
 import Header from "./Header.jsx"
-import pic from "./assets/dumbbell.png"
-import pic2 from "./assets/Bus.png"
-import pic3 from "./assets/megaphone.png"
-import pic4 from "./assets/book.png"
+import GymPage from "./GymPage.jsx"
+import TravelPage from "./TravelPage.jsx"
+import EventsPage from "./EventsPage.jsx"
+import LibraryPage from "./LibraryPage.jsx"
+import ProfilePage from "./ProfilePage.jsx"
+
 function Home() {
-	return (
-	  <>
-		<Header/>
-		<Feature image = {pic}  title="WLV Gym" info="Open"/>
-		<Feature image = {pic2} title="Travel" info="Bus times: "/>
-		<Feature image = {pic3} title="SU Events" info="Event "/>
-		<Feature image = {pic4} title="Harrison Library" info="Status: "/>
-	
-	  </>
-  
+  const [activePage, setActivePage] = useState("home");
+
+  const goBack = () => setActivePage("home");
+
+  // Conditional rendering for sub-pages
+  if (activePage === "Gym") {
+    return <GymPage onBack={goBack} />;
+  }
+  if (activePage === "Travel") {
+    return <TravelPage onBack={goBack} />;
+  }
+  if (activePage === "Events") {
+    return <EventsPage onBack={goBack} />;
+  }
+  if (activePage === "Library") {
+    return <LibraryPage onBack={goBack} />;
+  }
+  if (activePage === "Profile") {
+    return <ProfilePage onBack={goBack} />;
+  }
+
+  return (
+    <>
+      <Header setActivePage={setActivePage} activePage={activePage} />
+      
+      <div className="hero-section">
+        <h1 className="hero-title">Welcome back, John</h1>
+        <p className="hero-subtitle">What would you like to do today?</p>
+        
+        <div className="search-bar">
+          <Search size={20} color="#64748b" />
+          <input type="text" className="search-input" placeholder="Search for events, gym classes, or books..." />
+        </div>
+      </div>
+
+      <main className="features-container">
+        <div className="feature-wrapper" onClick={() => setActivePage("Gym")}>
+          <Feature icon={Dumbbell} title="WLV Gym" info="Open Now • 25% Capacity" />
+        </div>
+        <div className="feature-wrapper" onClick={() => setActivePage("Travel")}>
+          <Feature icon={Bus} title="Travel" info="Next Bus: 12 mins" />
+        </div>
+        <div className="feature-wrapper" onClick={() => setActivePage("Events")}>
+          <Feature icon={Calendar} title="SU Events" info="3 Events Today" />
+        </div>
+        <div className="feature-wrapper" onClick={() => setActivePage("Library")}>
+          <Feature icon={BookOpen} title="Library" info="Status: Quiet • 3rd Floor" />
+        </div>
+      </main>
+    </>
   )
 }
 
