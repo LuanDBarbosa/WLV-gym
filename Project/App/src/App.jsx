@@ -6,6 +6,7 @@ import GymPage from "./GymPage.jsx"
 import TravelPage from "./TravelPage.jsx"
 import EventsPage from "./EventsPage.jsx"
 import LibraryPage from "./LibraryPage.jsx"
+import ProfilePage from "./ProfilePage.jsx"
 
 function App() {
   const [activePage, setActivePage] = useState("home");
@@ -25,10 +26,13 @@ function App() {
   if (activePage === "Library") {
     return <LibraryPage onBack={goBack} />;
   }
+  if (activePage === "Profile") {
+    return <ProfilePage onBack={goBack} />;
+  }
 
   return (
     <>
-      <Header />
+      <Header setActivePage={setActivePage} activePage={activePage} />
       
       <div className="hero-section">
         <h1 className="hero-title">Welcome back, John</h1>
