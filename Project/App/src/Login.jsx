@@ -11,14 +11,28 @@ function Login() {
 	const [redirect, setRedirect] = useState(false);
 	const [show, setShow] = useState(false);
 
-	const login = () => {
-		axios.post("http://localhost:8080/Login", {
-			name: name,
-			password: password
-		})
-		.then(res =>{ setShow(false); setRedirect(true)})
-		.catch(() =>{setShow(true)});
-	};
+	const login = async () => {
+		try {
+			const res = await axios.post("/api/login.php", { name, password });
+			const data = res?.data;
+
+			if (!data) {
+			  alert("Server did not return valid response");
+			  return;
+			}
+
+			if (data.success) {
+				setShow(false);
+				setRedirect(true);
+			// Redirect, save token, etc.
+			} else {
+				setShow(true);
+			}
+		} catch (err) {
+			console.error(err);
+			alert("Network error or server down");
+		}
+};
 
 	function UserChange(e){
 		setShow(false);

@@ -18,7 +18,7 @@ function Register() {
 	const [passwordLength, setPasswordLength] = useState(false);
 
 	useEffect(() => {
-	  axios.get("http://localhost:8080/users")
+	  axios.get("/api/get_users.php")
 		.then(res => {
 		  setUsers(res.data);
 		})
@@ -27,7 +27,7 @@ function Register() {
 
 	const addUser = () => {
 		if(!usernameTaken && !validEmail && !newEmail && !passwordLength && username !== "" && email !== "" && password !== ""){
-			axios.post("http://localhost:8080/users", { username, email,password})
+			axios.post("/api/register.php", { username, email,password})
 				.then(res => {
 				setUsers([...users, { username, email,password }]);
 				setRedirect(true);
