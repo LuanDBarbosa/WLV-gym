@@ -126,13 +126,6 @@ h4{
     width: 50px;
 }
 
-.user_img3{
-    position: absolute;
-    top: 336px;
-    left: 968px;
-    width: 55px;
-}
-
 .SendToRegisterOrLogin{
     font-family:Arial,sans-serif;
     font-weight: bold;
@@ -190,4 +183,18 @@ h3{
     position: absolute;
     top:380px;
     left: 545px;
+}
+
+.img4{
+    position: absolute;
+    top: 360px;
+    left: 985px;
+    border: none;
+    cursor: pointer;
+}
+
+.img4 .img5{
+    position: absolute;
+    right: -25px;
+    bottom: -28px;
 }
