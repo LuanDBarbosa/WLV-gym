@@ -1,4 +1,7 @@
-function Header({ setActivePage, activePage }) {
+function Header({ setActivePage, activePage, user }) {
+  const displayUser = user?.username || "Guest";
+  const initials = displayUser.charAt(0).toUpperCase();
+
   return (
     <header>
       <div className="header-left">
@@ -27,8 +30,8 @@ function Header({ setActivePage, activePage }) {
       </nav>
 
       <div className="user-profile" onClick={() => setActivePage("Profile")} style={{cursor: 'pointer'}}>
-        <span>John Doe</span>
-        <div className="avatar">JD</div>
+        <span>{displayUser}</span>
+        <div className="avatar">{initials}</div>
       </div>
     </header>
   )

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Dumbbell, Bus, Calendar, BookOpen, Search } from 'lucide-react'
 import Feature from "./Feature.jsx"
 import Header from "./Header.jsx"
@@ -10,6 +10,14 @@ import ProfilePage from "./ProfilePage.jsx"
 
 function Home() {
   const [activePage, setActivePage] = useState("home");
+  const [user, setUser] = useState({ username: "Guest" });
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUser({ username: storedUsername });
+    }
+  }, []);
 
   const goBack = () => setActivePage("home");
 
@@ -24,13 +32,13 @@ function Home() {
       case "Library":
         return <LibraryPage onBack={goBack} />;
       case "Profile":
-        return <ProfilePage onBack={goBack} />;
+        return <ProfilePage onBack={goBack} user={user} />;
       default:
         // Main Home Dashboard
         return (
           <>
             <div className="hero-section">
-              <h1 className="hero-title">Welcome back, John</h1>
+              <h1 className="hero-title">Welcome back, {user.username}</h1>
               <p className="hero-subtitle">What would you like to do today?</p>
               
               <div className="search-bar">
@@ -60,7 +68,7 @@ function Home() {
 
   return (
     <>
-      <Header setActivePage={setActivePage} activePage={activePage} />
+      <Header setActivePage={setActivePage} activePage={activePage} user={user} />
       {renderContent()}
     </>
   )

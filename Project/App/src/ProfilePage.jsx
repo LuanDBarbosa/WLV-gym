@@ -1,6 +1,10 @@
 import { User, Mail, Book, Lock, Edit2 } from "lucide-react";
 
-export default function ProfilePage({ onBack }) {
+export default function ProfilePage({ onBack, user }) {
+  const displayUser = user?.username || "Guest";
+  const initials = displayUser.charAt(0).toUpperCase();
+  const dummyEmail = displayUser.toLowerCase() + "";
+
   return (
     <div className="sub-page-container">
       <button className="back-btn" onClick={onBack}>← Back to Hub</button>
@@ -12,12 +16,12 @@ export default function ProfilePage({ onBack }) {
       <div className="profile-layout">
         <div className="profile-sidebar">
           <div className="profile-avatar-large">
-            <span>JD</span>
+            <span>{initials}</span>
             <button className="edit-avatar-btn">
               <Edit2 size={16} />
             </button>
           </div>
-          <h2 className="profile-name">John Doe</h2>
+          <h2 className="profile-name">{displayUser}</h2>
           <p className="profile-role">Computer Science BSc (Hons)</p>
           <span className="status-badge status-green">Enrolled</span>
         </div>
@@ -35,18 +39,18 @@ export default function ProfilePage({ onBack }) {
               <tbody>
                 <tr>
                   <td className="icon-col"><User size={20} color="var(--primary-color)" /></td>
-                  <td className="label-col">Username</td>
-                  <td className="value-col">j.doe21</td>
+                  <td className="label-col">Student Number</td>
+                  <td className="value-col">{displayUser}</td>
                 </tr>
                 <tr>
                   <td className="icon-col"><Mail size={20} color="var(--primary-color)" /></td>
                   <td className="label-col">Email</td>
-                  <td className="value-col">j.doe21@student.wlv.ac.uk</td>
+                  <td className="value-col">{user?.email || dummyEmail}</td>
                 </tr>
                 <tr>
                   <td className="icon-col"><Book size={20} color="var(--primary-color)" /></td>
                   <td className="label-col">Course Name</td>
-                  <td className="value-col">Computer Science BSc</td>
+                  <td className="value-col">{user?.course || "Computer Science BSc"}</td>
                 </tr>
                 <tr>
                   <td className="icon-col"><Lock size={20} color="var(--primary-color)" /></td>

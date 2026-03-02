@@ -90,10 +90,10 @@ function Register() {
 						<h2 className="auth-title">Registration</h2>
 						
 						<div className="auth-input-group">
-							<input className="auth-input" type="text" placeholder="Username" value={username} onChange={UserChange}/>
+							<input className="auth-input" type="text" placeholder="Student Number" value={username} onChange={UserChange}/>
 							<img className="auth-icon" src={User} alt="User Icon" />
 						</div>
-						{usernameTaken && (<p className="auth-error">Username already taken</p>)}
+						{usernameTaken && (<p className="auth-error">Student number already taken</p>)}
 						
 						<div className="auth-input-group">
 							<input className="auth-input" type="text" placeholder="Email" value={email} onChange={EmailChange}/>

@@ -26,6 +26,7 @@ function Login() {
 			}
 
 			if (data.success) {
+				localStorage.setItem("username", name);
 				setShow(false);
 				setRedirect(true);
 			// Redirect, save token, etc.
@@ -68,7 +69,7 @@ function Login() {
 						<h2 className="auth-title">Login</h2>
 						
 						<div className="auth-input-group">
-							<input className="auth-input" type="text" placeholder="Username or Email" value={name} onChange={UserChange}/>
+							<input className="auth-input" type="text" placeholder="Student Number or Email" value={name} onChange={UserChange}/>
 							<img className="auth-icon" src={username} alt="User Icon" />
 						</div>
 						
@@ -79,7 +80,7 @@ function Login() {
 							</button>
 						</div>
 						
-						{show && (<p className="auth-error">Username or password is incorrect.</p>)}
+						{show && (<p className="auth-error">Student number or password is incorrect.</p>)}
 						
 						<button className="auth-button" onClick={login}>Login</button>
 						<p className="auth-footer">Haven't got an account? Click <Link to="/Register">here</Link></p>
