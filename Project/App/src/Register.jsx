@@ -3,6 +3,7 @@ import axios from "axios";
 import User from "./assets/username.png"
 import Email from "./assets/email.png"
 import lock from "./assets/lock.png"
+import OpenLock from "./assets/Openlock.png"
 import Login from "./Login.jsx"
 import { Link,Navigate} from 'react-router-dom';
 
@@ -16,9 +17,12 @@ function Register() {
 	const [validEmail, setValidEmail] = useState(false);
 	const [newEmail, setNewEmail] = useState(false);
 	const [passwordLength, setPasswordLength] = useState(false);
+	const [passwordState, setPasswordState] = useState("password");
+	const [image, setShowImage] = useState(lock);
+	const [count, setCount] = useState(0);
 
 	useEffect(() => {
-	  axios.get("http://localhost:8080/users")
+	  axios.get("/api/get_users.php")
 		.then(res => {
 		  setUsers(res.data);
 		})
@@ -27,7 +31,7 @@ function Register() {
 
 	const addUser = () => {
 		if(!usernameTaken && !validEmail && !newEmail && !passwordLength && username !== "" && email !== "" && password !== ""){
-			axios.post("http://localhost:8080/users", { username, email,password})
+			axios.post("/api/register.php", { username, email,password})
 				.then(res => {
 				setUsers([...users, { username, email,password }]);
 				setRedirect(true);
@@ -65,6 +69,19 @@ function Register() {
 		}
 	}
 
+	function  PasswordStateChange(){
+		setCount(prev => prev + 1);
+		const newCount = count + 1;
+		if (newCount % 2 !== 0){
+			setShowImage(OpenLock);
+			setPasswordState("text");
+		}
+		else{
+			setShowImage(lock);
+			setPasswordState("password");
+		}
+	}
+
 	return (<>
 				{redirect && <Navigate to="/Login" />}
 
@@ -84,8 +101,8 @@ function Register() {
 					</div>
 					<br/>
 					<div>
-						<input className="Input3" type="password" placeholder="Password" value={password} onChange={PasswordChange}/>
-						<img className="user_img3" src={lock} alt=""></img>
+						<input className="Input3" type={passwordState} placeholder="Password" value={password} onChange={PasswordChange}/>
+						<button className = "img4" onClick = {PasswordStateChange}><img className = "img5" src={image} alt=""></img></button>
 						{passwordLength && (<p className = "CheckPassword">Password must be 8 characters or more.</p>)}
 					</div>
 					<button className="cred-button" onClick={addUser}>Register</button>
