@@ -85,28 +85,34 @@ function Register() {
 	return (<>
 				{redirect && <Navigate to="/Login" />}
 
-				<div>
-					<h4>Registration</h4>
-					<div>
-						<input className="Input" type="text" placeholder="Username" value={username} onChange={UserChange}/>
-						<img className="user_img" src={User} alt=""></img>
-						{usernameTaken && (<p className = "CheckUsername">Username already taken</p>)}
+				<div className="auth-container">
+					<div className="auth-card">
+						<h2 className="auth-title">Registration</h2>
+						
+						<div className="auth-input-group">
+							<input className="auth-input" type="text" placeholder="Username" value={username} onChange={UserChange}/>
+							<img className="auth-icon" src={User} alt="User Icon" />
+						</div>
+						{usernameTaken && (<p className="auth-error">Username already taken</p>)}
+						
+						<div className="auth-input-group">
+							<input className="auth-input" type="text" placeholder="Email" value={email} onChange={EmailChange}/>
+							<img className="auth-icon" src={Email} alt="Email Icon" />
+						</div>
+						{validEmail && (<p className="auth-error">Email must be your school account.</p>)}
+						{newEmail && (<p className="auth-error">This email already belongs to an existing account.</p>)}
+						
+						<div className="auth-input-group">
+							<input className="auth-input" type={passwordState} placeholder="Password" value={password} onChange={PasswordChange}/>
+							<button type="button" className="auth-icon-button" onClick={PasswordStateChange}>
+								<img src={image} alt="Toggle Password Visibility" />
+							</button>
+						</div>
+						{passwordLength && (<p className="auth-error">Password must be 8 characters or more.</p>)}
+						
+						<button className="auth-button" onClick={addUser}>Register</button>
+						<p className="auth-footer">Already got an account? Click <Link to="/Login">here</Link></p>
 					</div>
-					<br/>
-					<div>
-						<input className="Input2" type="text" placeholder="Email" value={email} onChange={EmailChange}/>
-						<img className="user_img2" src={Email} alt=""></img>
-						{validEmail && (<p className = "CheckEmail">Email must be your school account.</p>)}
-						{newEmail && (<p className = "CheckEmail">This email already belongs to an existing account.</p>)}
-					</div>
-					<br/>
-					<div>
-						<input className="Input3" type={passwordState} placeholder="Password" value={password} onChange={PasswordChange}/>
-						<button className = "img4" onClick = {PasswordStateChange}><img className = "img5" src={image} alt=""></img></button>
-						{passwordLength && (<p className = "CheckPassword">Password must be 8 characters or more.</p>)}
-					</div>
-					<button className="cred-button" onClick={addUser}>Register</button>
-					<p className="SendToRegisterOrLogin">Already got an account click <Link to="/Login">here</Link></p>
 				</div>
 			</>
 

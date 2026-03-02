@@ -63,20 +63,27 @@ function Login() {
 
 	return (<>
 				{redirect && <Navigate to="/Home" />}
-				<div>
-					<h3>Login</h3>
-					<div>
-						<input className="Input4" type="text" placeholder="Username or Email" value={name} onChange={UserChange}/>
-						<img className="user_img4" src={username} alt=""></img>
+				<div className="auth-container">
+					<div className="auth-card">
+						<h2 className="auth-title">Login</h2>
+						
+						<div className="auth-input-group">
+							<input className="auth-input" type="text" placeholder="Username or Email" value={name} onChange={UserChange}/>
+							<img className="auth-icon" src={username} alt="User Icon" />
+						</div>
+						
+						<div className="auth-input-group">
+							<input className="auth-input" type={passwordState} placeholder="Password" value={password} onChange={PasswordChange}/>
+							<button type="button" className="auth-icon-button" onClick={PasswordStateChange}>
+								<img src={image} alt="Toggle Password Visibility" />
+							</button>
+						</div>
+						
+						{show && (<p className="auth-error">Username or password is incorrect.</p>)}
+						
+						<button className="auth-button" onClick={login}>Login</button>
+						<p className="auth-footer">Haven't got an account? Click <Link to="/Register">here</Link></p>
 					</div>
-					<br/>
-					<div>
-						<input className="Input3" type={passwordState} placeholder="Password" value={password} onChange={PasswordChange}/>
-						<button className = "img4" onClick = {PasswordStateChange}><img className = "img5" src={image} alt=""></img></button>
-					</div>
-					{show && (<p className = "CheckPassword">Username or password is incorrect.</p>)}
-					<button className="cred-button" onClick={login}>Login</button>
-					<p className="SendToRegisterOrLogin">Haven't got an account click <Link to="/Register">here</Link></p>
 				</div>
 			</>
   
