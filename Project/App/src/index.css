@@ -349,6 +349,7 @@ hr {
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;
+  display: grid;
 }
 
 .action-btn:hover { background-color: var(--primary-hover); }
@@ -810,6 +811,8 @@ hr {
   color: var(--secondary-color);
   display: flex;
   align-items: center;
+  border: none;
+  outline: none;
 }
 
 .obscured-password {

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import axios from "axios";
 import { Dumbbell, Bus, Calendar, BookOpen, Search } from 'lucide-react'
 import Feature from "./Feature.jsx"
 import Header from "./Header.jsx"
@@ -10,13 +11,26 @@ import ProfilePage from "./ProfilePage.jsx"
 
 function Home() {
   const [activePage, setActivePage] = useState("home");
-  const [user, setUser] = useState({ username: "Guest" });
+  const [user, setUser] = useState([]);
+  const [allUsers, setallUsers] = useState([]);
+
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    if (storedUsername) {
-      setUser({ username: storedUsername });
-    }
+      axios.get("/api/get_users.php")
+		.then(res => {
+		  setallUsers(res.data);
+          const storedUsername = localStorage.getItem("username");
+
+          const target = allUsers.find(u => u.username === storedUsername);
+
+          if (target) {
+            setUser({ 
+              username: target.username, 
+              email: target.email 
+            });
+          }
+      })
+	  .catch(err => console.log(err));
   }, []);
 
   const goBack = () => setActivePage("home");
@@ -32,7 +46,7 @@ function Home() {
       case "Library":
         return <LibraryPage onBack={goBack} />;
       case "Profile":
-        return <ProfilePage onBack={goBack} user={user} />;
+        return <ProfilePage onBack={goBack} user={user} allUsers = {allUsers} />;
       default:
         // Main Home Dashboard
         return (

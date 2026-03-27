@@ -1,9 +1,83 @@
 import { User, Mail, Book, Lock, Edit2 } from "lucide-react";
+import { useState } from 'react'
+import axios from "axios";
 
-export default function ProfilePage({ onBack, user }) {
-  const displayUser = user?.username || "Guest";
+export default function ProfilePage({ onBack, user, allUsers }) {
+  const [displayUser,setDisplayUser] = useState(user?.username || "Guest");
+  const [displayEmail,setDisplayEmail] = useState("guest");
+  const [displayCourse,setDisplayCourse] = useState("Computer Science BSc");
+  const [displayPassword,setDisplayPassword] = useState("");
   const initials = displayUser.charAt(0).toUpperCase();
-  const dummyEmail = displayUser.toLowerCase() + "";
+  const [show, setShow] = useState(false);
+  const [fixed,setFixed] = useState(true);
+  const [invalid,setInvalid] = useState(false);
+  const [invalidUsername,setInvalidUsername] = useState(false);
+  const [invalidEmail,setInvalidEmail] = useState(false);
+  const [invalidPassword,setInvalidPassword] = useState(false);
+
+  const update = () => {
+      if (displayUser== "" || displayEmail == "" || displayPassword == "" || displayCourse == ""){
+          setInvalid(true);
+      }
+	  if(!invalidUsername && !invalidEmail && !invalidPassword && displayUser!== "" && displayEmail !== "" && displayPassword !== ""){
+		axios.post("/api/update.php", {displayUser, displayEmail, displayPassword})
+			.then(res => {
+				setShow(false);
+                setFixed(true);
+			})
+			.catch(err => console.log(err));
+		};
+  }
+
+  function ChangeInfo(){
+      setShow(true);
+      setFixed(false);
+  }
+
+  function StudentNumChange(e){
+      const value = e.target.value;
+      if (value.length == 1){
+          setInvalid(false);
+      }
+      setDisplayUser(value);
+      const exists = allUsers.some(u => u.username === value);
+      setInvalidUsername(exists);
+  }
+
+  function EmailChange(e){
+      const value = e.target.value;
+      if (value.length == 1){
+          setInvalid(false);
+      }
+
+      setDisplayEmail(value);
+      const exists = allUsers.some(u => u.username === value);
+      setInvalidEmail(exists);
+      const lastTen = value.slice(-10);
+	  if (lastTen !== "@wlv.ac.uk") {
+          setInvalidEmail(true);
+      }
+  }
+  function CourseChange(e){
+      const value = e.target.value;
+      setDisplayCourse(value);
+      if (value.length == 1){
+          setInvalid(false);
+      }
+  }
+
+  function PasswordChange(e){
+      const value = e.target.value;
+      if (value.length == 1){
+          setInvalid(false);
+      }
+	  setDisplayPassword(value);
+	  if (value.length < 8 && value !== ""){
+         setInvalidPassword(true);
+	  }else{
+		  setInvalidPassword(false);
+	  }
+  }
 
   return (
     <div className="sub-page-container">
@@ -30,7 +104,7 @@ export default function ProfilePage({ onBack, user }) {
           <div className="section">
             <div className="section-header-flex">
                <h2>Account Information</h2>
-               <button className="text-btn flex-center gap-sm">
+               <button className="text-btn flex-center gap-sm" onClick={ChangeInfo}>
                  <Edit2 size={14} /> Edit
                </button>
             </div>
@@ -40,28 +114,34 @@ export default function ProfilePage({ onBack, user }) {
                 <tr>
                   <td className="icon-col"><User size={20} color="var(--primary-color)" /></td>
                   <td className="label-col">Student Number</td>
-                  <td className="value-col">{displayUser}</td>
+                  {fixed && <td className="value-col">{displayUser}</td>}
+                  {show && <td><input className="value-col" type = "text" value = {displayUser} onChange = {StudentNumChange} style={{ fontSize: '1.05rem'}}/></td>}
                 </tr>
                 <tr>
                   <td className="icon-col"><Mail size={20} color="var(--primary-color)" /></td>
                   <td className="label-col">Email</td>
-                  <td className="value-col">{user?.email || dummyEmail}</td>
+                  {fixed && <td className="value-col">{user?.email || displayEmail}</td>}
+                  {show && <td><input className="value-col" type = "text" value = {displayEmail} onChange = {EmailChange} style={{ fontSize: '1.05rem'}}/></td>}
                 </tr>
                 <tr>
                   <td className="icon-col"><Book size={20} color="var(--primary-color)" /></td>
                   <td className="label-col">Course Name</td>
-                  <td className="value-col">{user?.course || "Computer Science BSc"}</td>
+                  {fixed && <td className="value-col">{user?.course || displayCourse}</td>}
+                  {show && <td><input className="value-col" type = "text" value = {displayCourse} onChange = {CourseChange} style={{ fontSize: '1.05rem'}}/></td>}
                 </tr>
                 <tr>
                   <td className="icon-col"><Lock size={20} color="var(--primary-color)" /></td>
                   <td className="label-col">Password</td>
-                  <td className="value-col">
-                    <span className="obscured-password">••••••••••••</span>
-                    <button className="action-btn outline small ml-auto">Change</button>
-                  </td>
+                  {fixed && <td className="value-col"><span className="obscured-password">••••••••••••</span></td>}
+                  {show && <td><input className="value-col" type = "password" value = {displayPassword} onChange = {PasswordChange} style={{ fontSize: '1.05rem'}}/></td>}
                 </tr>
-              </tbody>
+               </tbody>
             </table>
+            {show && <button className="action-btn outline small ml-auto" onClick = {update}>Change</button>}
+            {invalid && (<p className="auth-error">Enter valid details.</p>)}
+            {invalidUsername && (<p className="auth-error">Username already taken.</p>)}
+            {invalidEmail && (<p className="auth-error">Needs to be a school account and linked to one account only.</p>)}
+            {invalidPassword && (<p className="auth-error">Password must be 8 characters or more.</p>)}
           </div>
 
           <div className="section">
