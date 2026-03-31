@@ -1,8 +1,11 @@
 import { User, Mail, Book, Lock, Edit2 } from "lucide-react";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from "axios";
 
 export default function ProfilePage({ onBack, user, allUsers }) {
+  const root = document.documentElement;
+  const styles = getComputedStyle(root);
+  const [isDark,setIsDark] = useState(false);
   const [displayUser,setDisplayUser] = useState(user?.username || "Guest");
   const [displayEmail,setDisplayEmail] = useState("guest");
   const [displayCourse,setDisplayCourse] = useState("Computer Science BSc");
@@ -14,6 +17,17 @@ export default function ProfilePage({ onBack, user, allUsers }) {
   const [invalidUsername,setInvalidUsername] = useState(false);
   const [invalidEmail,setInvalidEmail] = useState(false);
   const [invalidPassword,setInvalidPassword] = useState(false);
+  const [count,setCount] = useState(0);
+  useEffect(() => {
+      if (styles.getPropertyValue("--background").trim() == "white"){
+          setCount(0);
+          setIsDark(false);
+      }else{
+          setCount(1);
+          setIsDark(true);
+      }
+      
+  }, []);
 
   const update = () => {
       if (displayUser== "" || displayEmail == "" || displayPassword == "" || displayCourse == ""){
@@ -27,6 +41,33 @@ export default function ProfilePage({ onBack, user, allUsers }) {
 			})
 			.catch(err => console.log(err));
 		};
+  }
+
+  function DarkMode(){
+      setCount(count+1);
+      if (count % 2 !== 0){
+        root.style.setProperty('--primary-color', '#0f766e');
+        root.style.setProperty('--bg-color', '#f8fafc');
+        root.style.setProperty('--card-bg', '#ffffff');
+        root.style.setProperty('--background', 'white');
+        root.style.setProperty('--text-main', '#1e293b');
+        root.style.setProperty('--secondary-color', '#475569');
+        root.style.setProperty('--text-muted', '#64748b');
+        root.style.setProperty('--library-color', 'hsl(1, 1%, 90%)');
+        root.style.setProperty('--icon-color', '#f1f5f9');
+        setIsDark(false);
+      }else{
+        root.style.setProperty('--primary-color', '#20b2aa');
+        root.style.setProperty('--card-bg', '#333333');
+        root.style.setProperty('--bg-color', '#1f1f1f');
+        root.style.setProperty('--background', '#474747');
+        root.style.setProperty('--text-main', '#f5f5f5');
+        root.style.setProperty('--secondary-color', '#f5f5f5');
+        root.style.setProperty('--text-muted', '#f5f5f5');
+        root.style.setProperty('--library-color', '#333333');
+        root.style.setProperty('--icon-color', '#333333');
+        setIsDark(true);
+      }
   }
 
   function ChangeInfo(){
@@ -92,7 +133,7 @@ export default function ProfilePage({ onBack, user, allUsers }) {
           <div className="profile-avatar-large">
             <span>{initials}</span>
             <button className="edit-avatar-btn">
-              <Edit2 size={16} />
+              <Edit2 size={16}/>
             </button>
           </div>
           <h2 className="profile-name">{displayUser}</h2>
@@ -163,7 +204,7 @@ export default function ProfilePage({ onBack, user, allUsers }) {
                      <p>Use dark theme for the interface.</p>
                   </div>
                   <label className="switch">
-                    <input type="checkbox" />
+                    <input type="checkbox" checked = {isDark} onChange = {DarkMode}/>
                     <span className="slider round"></span>
                   </label>
                </div>

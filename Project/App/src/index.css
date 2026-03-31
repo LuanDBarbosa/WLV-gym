@@ -6,7 +6,10 @@
   --secondary-color: #475569; /* Slate */
   --accent-color: #f59e0b; /* Amber for highlights */
   --bg-color: #f8fafc; /* Very light slate/gray */
+  --background: white;
   --card-bg: #ffffff;
+  --library-color: hsl(1, 1%, 90%);
+  --icon-color: #f1f5f9;
   --text-main: #1e293b;
   --text-muted: #64748b;
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -91,7 +94,7 @@ header h1 {
 .search-bar {
   display: flex;
   align-items: center;
-  background: white;
+  background: var(--card-bg);
   border: 1px solid #e2e8f0;
   border-radius: 9999px;
   padding: 0.75rem 1.5rem;
@@ -107,6 +110,7 @@ header h1 {
 }
 
 .search-input {
+  background: var(--card-bg);
   border: none;
   outline: none;
   width: 100%;
@@ -249,7 +253,7 @@ hr {
 }
 
 .section {
-  background: white;
+  background: var(--background);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
   box-shadow: var(--shadow-sm);
@@ -278,7 +282,7 @@ hr {
 
 /* Occupancy Meter */
 .occupancy-meter {
-  background: white;
+  background: var(--background);
   padding: 1.5rem;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
@@ -362,7 +366,7 @@ hr {
 
 .action-btn.outline:hover { background-color: #f0fdfa; }
 
-.info-table { width: 100%; border-collapse: collapse; }
+.info-table { width: 100%; border-collapse: collapse;}
 .info-table td { padding: 0.75rem 0; border-bottom: 1px solid #f1f5f9; }
 .info-table tr:last-child td { border-bottom: none; }
 
@@ -433,7 +437,7 @@ hr {
 
 .route-number {
   background: var(--text-main);
-  color: white;
+  color: var(--icon-color);
   padding: 0.1rem 0.4rem;
   border-radius: 4px;
   font-weight: 700;
@@ -552,7 +556,8 @@ hr {
 }
 
 .filter-btn {
-  background: white;
+  background: var(--bg-color);
+  color: var(--text-main);
   border: 1px solid #e2e8f0;
   padding: 0.5rem 1rem;
   border-radius: 9999px;
@@ -573,7 +578,7 @@ hr {
 }
 
 .event-card {
-  background: white;
+  background: var(--bg-color);
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid #f1f5f9;
@@ -582,7 +587,7 @@ hr {
 
 .event-icon {
   height: 100px;
-  background: #f1f5f9;
+  background: var(--icon-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -638,16 +643,17 @@ hr {
 }
 
 .avail-card {
-    background: #f8fafc;
     padding: 1rem;
     border-radius: var(--radius-md);
     text-align: center;
-    background-color: hsl(1, 1%, 90%);
+    background-color: var(--library-color);
     padding: 10px;
     color: hsl(163, 100%, 20%);
     border: 2px solid;
     border-radius: 15px;
 }
+
+.avail-card h3{color: var(--primary-color);}
 
 /* --- Added Layout Fixes --- */
 
@@ -718,7 +724,7 @@ hr {
 }
 
 .profile-sidebar {
-  background: white;
+  background: var(--background);
   border-radius: var(--radius-lg);
   padding: 2rem;
   box-shadow: var(--shadow-sm);
@@ -750,7 +756,7 @@ hr {
   bottom: 0;
   right: 0;
   background: white;
-  color: var(--text-main);
+  color: black;
   border: 1px solid #e2e8f0;
   border-radius: 50%;
   width: 32px;
@@ -808,6 +814,7 @@ hr {
 }
 
 .value-col {
+  background: var(--background);
   color: var(--secondary-color);
   display: flex;
   align-items: center;
@@ -833,7 +840,7 @@ hr {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background: #f8fafc;
+  background: var(--background);
   border-radius: var(--radius-md);
   border: 1px solid #f1f5f9;
 }
@@ -1049,4 +1056,8 @@ input:checked + .slider:before {
 .auth-footer a:hover {
   color: var(--primary-hover);
   text-decoration: underline;
+}
+
+.avail-note{
+    color: var(--primary-color);
 }
