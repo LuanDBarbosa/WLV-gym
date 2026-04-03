@@ -1,10 +1,13 @@
 import { User, Mail, Book, Lock, Edit2 } from "lucide-react";
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import axios from "axios";
+import Colorful from '@uiw/react-color-colorful';
 
 export default function ProfilePage({ onBack, user, allUsers }) {
   const root = document.documentElement;
+  const pickerRef = useRef();
   const styles = getComputedStyle(root);
+  const [currentColor,setCurrentColor] = useState("0f766e");
   const [isDark,setIsDark] = useState(false);
   const [displayUser,setDisplayUser] = useState(user?.username || "Guest");
   const [displayEmail,setDisplayEmail] = useState("guest");
@@ -14,11 +17,17 @@ export default function ProfilePage({ onBack, user, allUsers }) {
   const [show, setShow] = useState(false);
   const [fixed,setFixed] = useState(true);
   const [invalid,setInvalid] = useState(false);
+  const [colorChange,setColorChange] = useState(false);
   const [invalidUsername,setInvalidUsername] = useState(false);
   const [invalidEmail,setInvalidEmail] = useState(false);
   const [invalidPassword,setInvalidPassword] = useState(false);
   const [count,setCount] = useState(0);
   useEffect(() => {
+      const checkClickOutside = (e) => {
+        if (colorChange && pickerRef.current && !pickerRef.current.contains(e.target)) {
+          setColorChange(false);
+        }
+      };
       if (styles.getPropertyValue("--background").trim() == "white"){
           setCount(0);
           setIsDark(false);
@@ -26,8 +35,9 @@ export default function ProfilePage({ onBack, user, allUsers }) {
           setCount(1);
           setIsDark(true);
       }
-      
-  }, []);
+      document.addEventListener("mousedown", checkClickOutside);
+      return () => document.removeEventListener("mousedown", checkClickOutside);
+  }, [colorChange]);
 
   const update = () => {
       if (displayUser== "" || displayEmail == "" || displayPassword == "" || displayCourse == ""){
@@ -55,6 +65,7 @@ export default function ProfilePage({ onBack, user, allUsers }) {
         root.style.setProperty('--text-muted', '#64748b');
         root.style.setProperty('--library-color', 'hsl(1, 1%, 90%)');
         root.style.setProperty('--icon-color', '#f1f5f9');
+        root.style.setProperty('--hover-color', '#f0fdfa');
         setIsDark(false);
       }else{
         root.style.setProperty('--primary-color', '#20b2aa');
@@ -66,6 +77,7 @@ export default function ProfilePage({ onBack, user, allUsers }) {
         root.style.setProperty('--text-muted', '#f5f5f5');
         root.style.setProperty('--library-color', '#333333');
         root.style.setProperty('--icon-color', '#333333');
+        root.style.setProperty('--hover-color', '#d3d3d3');
         setIsDark(true);
       }
   }
@@ -119,6 +131,14 @@ export default function ProfilePage({ onBack, user, allUsers }) {
 		  setInvalidPassword(false);
 	  }
   }
+  
+  function color(){
+      setColorChange(true);
+  }
+  function ChangeColor(NewColor){
+      setCurrentColor(NewColor);
+      root.style.setProperty('--edit-color', NewColor);
+  }
 
   return (
     <div className="sub-page-container">
@@ -132,9 +152,10 @@ export default function ProfilePage({ onBack, user, allUsers }) {
         <div className="profile-sidebar">
           <div className="profile-avatar-large">
             <span>{initials}</span>
-            <button className="edit-avatar-btn">
+            <button className="edit-avatar-btn" onClick = {color}>
               <Edit2 size={16}/>
             </button>
+            {colorChange && <div ref={pickerRef}><Colorful color = {currentColor} onChange={(color) => ChangeColor(color.hex)} /></div>}
           </div>
           <h2 className="profile-name">{displayUser}</h2>
           <p className="profile-role">Computer Science BSc (Hons)</p>
