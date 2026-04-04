@@ -27,7 +27,7 @@ export default function TravelPage({ onBack }) {
   // Map and Location States
   const [locationInput, setLocationInput] = useState("");
   const [userCoords, setUserCoords] = useState(null);
-  const campusCoords = [52.5883, -1.1278]; // Approx WLV Campus Coordinates
+  const campusCoords = [52.5880528, -2.1274831]; // Approx WLV Campus Coordinates
 
   useEffect(() => {
     const loadData = async () => {
