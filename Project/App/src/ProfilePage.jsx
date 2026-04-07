@@ -5,9 +5,10 @@ import Colorful from '@uiw/react-color-colorful';
 
 export default function ProfilePage({ onBack, user, allUsers }) {
   const root = document.documentElement;
+  const rootStyle = getComputedStyle(document.documentElement);
   const pickerRef = useRef();
   const styles = getComputedStyle(root);
-  const [currentColor,setCurrentColor] = useState("0f766e");
+  const [currentColor,setCurrentColor] = useState(rootStyle.getPropertyValue('--edit-color'));
   const [isDark,setIsDark] = useState(false);
   const [displayUser,setDisplayUser] = useState(user?.username || "Guest");
   const [displayEmail,setDisplayEmail] = useState("guest");
