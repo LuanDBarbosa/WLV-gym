@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 function Home() {
   const [activePage, setActivePage] = useState("home");
   const [user, setUser] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -25,6 +26,7 @@ function Home() {
         .then(res => {
              const storedUsername = localStorage.getItem("username");
              const target = res.data.find(u => u.username === storedUsername);
+             setAllUsers(res.data);
              console.log(target);
              if (target) {
                    setUser({ 
@@ -60,7 +62,7 @@ function Home() {
       case "Library":
         return <LibraryPage onBack={goBack} />;
       case "Profile":
-        return <ProfilePage onBack={goBack} user={user} />;
+        return <ProfilePage onBack={goBack} user={user} allUsers = {allUsers}/>;
       case "News":
         return <NewsMediaPage onBack={goBack} />;
       default:
