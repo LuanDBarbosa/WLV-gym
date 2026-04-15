@@ -14,12 +14,14 @@ require "db.php";
 // Decode JSON from React
 $data = json_decode(file_get_contents("php://input"), true);
 
-$username = $data["username"] ?? "";
+$oldUsername = $data["oldUsername"] ?? "";
+$newUsername = $data["username"] ?? "";
+$course = $data["course"] ?? "";
 $email = $data["email"] ?? "";
 $password = $data["password"] ?? "";
 
 // Validate
-if (!$username || !$email || !$password) {
+if (!$newUsername || !$email || !$password || !$oldUsername) {
     echo json_encode(["success" => false, "message" => "Missing fields"]);
     exit;
 }
@@ -28,8 +30,14 @@ if (!$username || !$email || !$password) {
 $hashed = password_hash($password, PASSWORD_DEFAULT);
 
 // Insert into DB
-$stmt = $pdo->prepare("UPDATE users SET username = :username, email = :email, password = :password");
-$ok = $stmt->execute([":username" => $username,":email"=>$email,":password" => $hashed]);
+$stmt = $pdo->prepare("UPDATE users SET username = :newUsername, course = :course, email = :email, password = :password WHERE username = :oldUsername");
+$ok = $stmt->execute([
+    ":newUsername" => $newUsername,
+    ":course"      => $course,
+    ":email"       => $email,
+    ":password"    => $hashed,
+    ":oldUsername" => $oldUsername
+]);
 
 if ($ok) {
     echo json_encode(["success" => true, "message" => "User updated"]);
