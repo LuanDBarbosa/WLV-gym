@@ -1,5 +1,6 @@
 import { User, Mail, Book, Lock, Edit2 } from "lucide-react";
 import { useState, useEffect, useRef } from 'react'
+import { useNavigate} from 'react-router-dom';
 import axios from "axios";
 import Colorful from '@uiw/react-color-colorful';
 
@@ -9,10 +10,13 @@ export default function ProfilePage({ onBack, user, allUsers }) {
   const pickerRef = useRef();
   const styles = getComputedStyle(root);
   const [currentColor,setCurrentColor] = useState(rootStyle.getPropertyValue('--edit-color'));
-  const [isDark,setIsDark] = useState(false);
+  const [isDark,setIsDark] = useState(() => {
+      const saved = localStorage.getItem("dark");
+      return saved !== null ? JSON.parse(saved) : false;
+  });
   const [displayUser,setDisplayUser] = useState(user?.username || "Guest");
-  const [displayEmail,setDisplayEmail] = useState("guest");
-  const [displayCourse,setDisplayCourse] = useState("Computer Science BSc");
+  const [displayEmail,setDisplayEmail] = useState(user?.email || "Guest");
+  const [displayCourse,setDisplayCourse] = useState(user?.course || "Enter Course");
   const [displayPassword,setDisplayPassword] = useState("");
   const initials = displayUser.charAt(0).toUpperCase();
   const [show, setShow] = useState(false);
@@ -22,8 +26,13 @@ export default function ProfilePage({ onBack, user, allUsers }) {
   const [invalidUsername,setInvalidUsername] = useState(false);
   const [invalidEmail,setInvalidEmail] = useState(false);
   const [invalidPassword,setInvalidPassword] = useState(false);
-  const [count,setCount] = useState(0);
+  const [count,setCount] = useState(() => {
+      const saved = localStorage.getItem("count");
+      return saved !== null ? JSON.parse(saved) : 0;
+  });
+  const navigate = useNavigate();
   useEffect(() => {
+      localStorage.setItem("count", JSON.stringify(count));
       const checkClickOutside = (e) => {
         if (colorChange && pickerRef.current && !pickerRef.current.contains(e.target)) {
           setColorChange(false);
@@ -38,17 +47,28 @@ export default function ProfilePage({ onBack, user, allUsers }) {
       }
       document.addEventListener("mousedown", checkClickOutside);
       return () => document.removeEventListener("mousedown", checkClickOutside);
-  }, [colorChange]);
+  }, [colorChange,count]);
 
   const update = () => {
+      setInvalid(false);
       if (displayUser== "" || displayEmail == "" || displayPassword == "" || displayCourse == ""){
           setInvalid(true);
+          return;
       }
-	  if(!invalidUsername && !invalidEmail && !invalidPassword && displayUser!== "" && displayEmail !== "" && displayPassword !== ""){
-		axios.post("/api/update.php", {displayUser, displayEmail, displayPassword})
+	  if(!invalidUsername && !invalidEmail && !invalidPassword && displayUser!== "" && displayEmail !== "" && displayPassword !== "" &&  displayCourse !== ""){
+		axios.post("/api/update.php", {oldUsername: localStorage.getItem("username"), 
+            username: displayUser, 
+            course: displayCourse, 
+            email: displayEmail, 
+            password: displayPassword})
 			.then(res => {
-				setShow(false);
-                setFixed(true);
+                if (res.data.success) {
+                    localStorage.setItem("username", displayUser);
+                    setShow(false);
+                    setFixed(true);
+                } else {
+                    alert(errorMsg); 
+                }
 			})
 			.catch(err => console.log(err));
 		};
@@ -67,6 +87,7 @@ export default function ProfilePage({ onBack, user, allUsers }) {
         root.style.setProperty('--library-color', 'hsl(1, 1%, 90%)');
         root.style.setProperty('--icon-color', '#f1f5f9');
         root.style.setProperty('--hover-color', '#f0fdfa');
+        localStorage.setItem("dark", JSON.stringify(false));
         setIsDark(false);
       }else{
         root.style.setProperty('--primary-color', '#20b2aa');
@@ -79,6 +100,7 @@ export default function ProfilePage({ onBack, user, allUsers }) {
         root.style.setProperty('--library-color', '#333333');
         root.style.setProperty('--icon-color', '#333333');
         root.style.setProperty('--hover-color', '#d3d3d3');
+        localStorage.setItem("dark", JSON.stringify(true));
         setIsDark(true);
       }
   }
@@ -94,7 +116,7 @@ export default function ProfilePage({ onBack, user, allUsers }) {
           setInvalid(false);
       }
       setDisplayUser(value);
-      const exists = allUsers.some(u => u.username === value);
+      const exists = allUsers.some(u => u.username === value && u.username !== user.username);
       setInvalidUsername(exists);
   }
 
@@ -105,7 +127,7 @@ export default function ProfilePage({ onBack, user, allUsers }) {
       }
 
       setDisplayEmail(value);
-      const exists = allUsers.some(u => u.username === value);
+      const exists = allUsers.some(u => u.email === value && u.email !== user.email);
       setInvalidEmail(exists);
       const lastTen = value.slice(-10);
 	  if (lastTen !== "@wlv.ac.uk") {
@@ -141,6 +163,11 @@ export default function ProfilePage({ onBack, user, allUsers }) {
       root.style.setProperty('--edit-color', NewColor);
   }
 
+  function logout(){
+      sessionStorage.removeItem('user');
+      navigate('/Login');
+
+  }
   return (
     <div className="sub-page-container">
       <button className="back-btn" onClick={onBack}>← Back to Hub</button>
@@ -161,6 +188,8 @@ export default function ProfilePage({ onBack, user, allUsers }) {
           <h2 className="profile-name">{displayUser}</h2>
           <p className="profile-role">Computer Science BSc (Hons)</p>
           <span className="status-badge status-green">Enrolled</span>
+          <br/>
+          <button className="action-btn outline small ml-auto" style = {{color: "red", borderColor: "red"}} onClick = {logout}>Logout</button>
         </div>
 
         <div className="profile-content">
@@ -183,13 +212,13 @@ export default function ProfilePage({ onBack, user, allUsers }) {
                 <tr>
                   <td className="icon-col"><Mail size={20} color="var(--primary-color)" /></td>
                   <td className="label-col">Email</td>
-                  {fixed && <td className="value-col">{user?.email || displayEmail}</td>}
+                  {fixed && <td className="value-col">{displayEmail}</td>}
                   {show && <td><input className="value-col" type = "text" value = {displayEmail} onChange = {EmailChange} style={{ fontSize: '1.05rem'}}/></td>}
                 </tr>
                 <tr>
                   <td className="icon-col"><Book size={20} color="var(--primary-color)" /></td>
                   <td className="label-col">Course Name</td>
-                  {fixed && <td className="value-col">{user?.course || displayCourse}</td>}
+                  {fixed && <td className="value-col">{displayCourse}</td>}
                   {show && <td><input className="value-col" type = "text" value = {displayCourse} onChange = {CourseChange} style={{ fontSize: '1.05rem'}}/></td>}
                 </tr>
                 <tr>

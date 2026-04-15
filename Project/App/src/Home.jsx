@@ -9,30 +9,44 @@ import EventsPage from "./EventsPage.jsx"
 import LibraryPage from "./LibraryPage.jsx"
 import ProfilePage from "./ProfilePage.jsx"
 import NewsMediaPage from "./NewsMediaPage.jsx"
-
+import { useNavigate } from 'react-router-dom';
 function Home() {
   const [activePage, setActivePage] = useState("home");
   const [user, setUser] = useState([]);
-  const [allUsers, setallUsers] = useState([]);
-
+  const [allUsers, setAllUsers] = useState([]);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-      axios.get("/api/get_users.php")
-		.then(res => {
-		  setallUsers(res.data);
-          const storedUsername = localStorage.getItem("username");
+      const User = JSON.parse(sessionStorage.getItem('user'));
+      if(!User){
+        // navigate('/Login');
+      }else {
+        axios.get("/api/get_users.php")
+        .then(res => {
+             const storedUsername = localStorage.getItem("username");
+             const target = res.data.find(u => u.username === storedUsername);
+             setAllUsers(res.data);
+             if (target) {
+                   setUser({ 
+                       username: target.username,
+                       course: target.course,
+                       email: target.email
+                   })
+             }
+             setIsLoading(false);
 
-          const target = allUsers.find(u => u.username === storedUsername);
+        })
+        .catch(err => {
+            console.log(err);
+        });
 
-          if (target) {
-            setUser({ 
-              username: target.username, 
-              email: target.email 
-            });
-          }
-      })
-	  .catch(err => console.log(err));
-  }, []);
+      }
+  }, [navigate]);
+
+  if(!isLoading){
+    return null;
+  } 
 
   const goBack = () => setActivePage("home");
 
@@ -47,7 +61,7 @@ function Home() {
       case "Library":
         return <LibraryPage onBack={goBack} />;
       case "Profile":
-        return <ProfilePage onBack={goBack} user={user} allUsers={allUsers} />;
+        return <ProfilePage onBack={goBack} user={user} allUsers = {allUsers}/>;
       case "News":
         return <NewsMediaPage onBack={goBack} />;
       default:
@@ -55,9 +69,9 @@ function Home() {
         return (
           <>
             <div className="hero-section">
-              <h1 className="hero-title">Welcome back, {user.username || 'Student'}</h1>
+              <h1 className="hero-title">Welcome back, {user.username || 'student'}</h1>
               <p className="hero-subtitle">What would you like to do today?</p>
-              
+
               <div className="search-bar">
                 <Search size={20} color="#64748b" />
                 <input type="text" className="search-input" placeholder="Search for events, gym classes, or books..." />
@@ -82,7 +96,7 @@ function Home() {
             {/* Highlighted News Section */}
             <div className="highlighted-news" style={{ marginTop: '3rem', padding: '0 1.5rem', maxWidth: '1200px', margin: '3rem auto 0 auto' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                <h2 style={{ fontSize: '1.3rem', margin: 0, display: 'flex', alignItems: 'center', gap: '8px', color: '#1e293b' }}>
+                <h2 style={{ fontSize: '1.3rem', margin: 0, display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-main)' }}>
                   <Newspaper size={22} color="var(--primary-color)" /> News & Media
                 </h2>
                 <button className="text-btn" onClick={() => setActivePage("News")} style={{ padding: 0, fontWeight: '600', display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--primary-color)', background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '1rem' }}>
