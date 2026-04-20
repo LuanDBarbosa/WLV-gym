@@ -105,10 +105,10 @@ export default function EventsPage({ onBack }) {
               <p className="event-description">{event.description}</p>
               
               <div className="event-meta-group">
-                <p className="event-meta">
+                <p className="event-meta" style = {{ color: "black"}}>
                   <span>📅</span> {event.date} • {event.time}
                 </p>
-                <p className="event-meta">
+                <p className="event-meta" style = {{ color: "black"}}>
                   <span>📍</span> {event.location}
                 </p>
               </div>

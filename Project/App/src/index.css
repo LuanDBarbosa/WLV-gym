@@ -686,7 +686,6 @@ hr {
 
 .event-meta {
   font-size: 0.875rem;
-  color: var(--secondary-color);
   margin: 0;
   display: flex;
   align-items: center;
@@ -821,7 +820,7 @@ hr {
 .profile-sidebar {
   background: var(--background);
   border-radius: var(--radius-lg);
-  padding: 2rem;
+  padding: 1.5rem;
   box-shadow: var(--shadow-sm);
   border: 1px solid #f1f5f9;
   display: flex;
@@ -1014,7 +1013,7 @@ input:checked + .slider:before {
 }
 
 .auth-card {
-  background: white;
+  background: var(--background);
   padding: 2.5rem;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
@@ -1059,7 +1058,7 @@ input:checked + .slider:before {
 .auth-input:focus {
   outline: none;
   border-color: var(--primary-color);
-  background-color: white;
+  background-color: var(--card-bg);
   box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
 }
 

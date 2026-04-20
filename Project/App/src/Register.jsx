@@ -11,6 +11,7 @@ function Register() {
 	const [users, setUsers] = useState([]);
 	const [username, setUserName] = useState("");
 	const [email, setEmail] = useState("");
+	const course = "";
 	const [password, setPassword] = useState("");
 	const [usernameTaken, setUsernameTaken] = useState(false);
 	const [redirect, setRedirect] = useState(false);
@@ -31,9 +32,9 @@ function Register() {
 
 	const addUser = () => {
 		if(!usernameTaken && !validEmail && !newEmail && !passwordLength && username !== "" && email !== "" && password !== ""){
-			axios.post("/api/register.php", { username, email,password})
+			axios.post("/api/register.php", { username, course, email,password})
 				.then(res => {
-				setUsers([...users, { username, email,password }]);
+				setUsers([...users, { username, course, email,password }]);
 				setRedirect(true);
 				})
 				.catch(err => console.log(err));
@@ -91,7 +92,7 @@ function Register() {
 						
 						<div className="auth-input-group">
 							<input className="auth-input" type="text" placeholder="Student Number" value={username} onChange={UserChange}/>
-							<img className="auth-icon" src={User} alt="User Icon" />
+							<img className="auth-icon" src={User} alt="User Icon"/>
 						</div>
 						{usernameTaken && (<p className="auth-error">Student number already taken</p>)}
 						

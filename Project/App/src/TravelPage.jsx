@@ -149,7 +149,7 @@ export default function TravelPage({ onBack }) {
                 <div key={idx} style={{ border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden' }}>
                   <button 
                     className="action-btn outline" 
-                    style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', width: '100%', border: 'none', background: isExpanded ? '#f8fafc' : 'white', cursor: 'pointer' }}
+                    style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', width: '100%', border: 'none', background: 'var(--bg-color)', cursor: 'pointer' }}
                     onClick={() => handleToggleCampus(idx, campus)}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -174,16 +174,16 @@ export default function TravelPage({ onBack }) {
                   
                   {/* Expanded Sub-buildings */}
                   {isExpanded && campus.buildings && (
-                    <div style={{ padding: '0 16px 16px 16px', background: '#f8fafc', borderTop: '1px solid #e2e8f0' }}>
-                      <p style={{ fontSize: '0.9rem', color: '#64748b', margin: '12px 0', borderBottom: '1px solid #e2e8f0', paddingBottom: '8px' }}>
+                    <div style={{ padding: '0 16px 16px 16px', background: "var(--bg-color)", borderTop: '1px solid #e2e8f0' }}>
+                      <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', margin: '12px 0', borderBottom: '1px solid #e2e8f0', paddingBottom: '8px' }}>
                         Click a building to navigate directly to it via Google Maps:
                       </p>
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '10px' }}>
                         {campus.buildings.map((b, bIdx) => (
-                          <div key={bIdx} style={{ background: 'white', padding: '10px', borderRadius: '6px', border: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div key={bIdx} style={{ background: 'var(--background)', padding: '10px', borderRadius: '6px', border: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <div>
-                               <div style={{ fontSize: '0.9rem', fontWeight: '500', color: '#1e293b' }}>{b.name}</div>
-                               <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '2px' }}>{b.desc}</div>
+                               <div style={{ fontSize: '0.9rem', fontWeight: '500', color: 'var(--text-main)' }}>{b.name}</div>
+                               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '2px' }}>{b.desc}</div>
                             </div>
                             <button 
                               onClick={(e) => openGoogleMaps(b.query, e)}

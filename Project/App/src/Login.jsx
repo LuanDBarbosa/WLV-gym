@@ -27,6 +27,7 @@ function Login() {
 
 			if (data.success) {
 				localStorage.setItem("username", name);
+				sessionStorage.setItem('user', JSON.stringify({name, password}));
 				setShow(false);
 				setRedirect(true);
 			// Redirect, save token, etc.

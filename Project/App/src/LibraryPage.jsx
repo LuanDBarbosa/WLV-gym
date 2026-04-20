@@ -24,7 +24,7 @@ export default function LibraryPage({ onBack }) {
 
   return (
     <div className="sub-page-container" style={{ maxWidth: '1000px' }}>
-      <button className="back-btn" onClick={onBack} style={{ marginBottom: '1rem' }}><ChevronLeft size={18}/> Back to Hub</button>
+      <button className="back-btn" onClick={onBack} style={{ marginBottom: '1rem' }}>← Back to Hub</button>
 
       <div className="lib-hero">
         <div className="lib-hero-content">

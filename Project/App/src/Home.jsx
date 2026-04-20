@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Dumbbell, Bus, Calendar, BookOpen, Search, Newspaper, PlayCircle, ChevronRight } from 'lucide-react'
 import Feature from "./Feature.jsx"
@@ -9,12 +10,24 @@ import EventsPage from "./EventsPage.jsx"
 import LibraryPage from "./LibraryPage.jsx"
 import ProfilePage from "./ProfilePage.jsx"
 import NewsMediaPage from "./NewsMediaPage.jsx"
-import { useNavigate } from 'react-router-dom';
+
 function Home() {
   const [activePage, setActivePage] = useState("home");
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
   const [allUsers, setallUsers] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
 
+  const searchData = [
+    { id: 1, title: "Clean Code", desc: "Robert C. Martin", type: "Book", page: "Library" },
+    { id: 2, title: "Yoga Beginner Class", desc: "Studio 1 • 18:00 Today", type: "Gym", page: "Gym" },
+    { id: 3, title: "Career Fair 2026", desc: "SU Main Hall • Tomorrow", type: "Event", page: "Events" },
+    { id: 4, title: "Advanced HIIT", desc: "Studio 2 • 19:30 Today", type: "Gym", page: "Gym" },
+    { id: 5, title: "Introduction to Algorithms", desc: "Thomas H. Cormen", type: "Book", page: "Library" },
+    { id: 6, title: "Guest Lecture: AI", desc: "Room MC 201 • Friday", type: "Event", page: "Events" }
+  ];
 
   const filteredResults = searchData.filter(item => 
     item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -25,13 +38,13 @@ function Home() {
   useEffect(() => {
       const User = JSON.parse(sessionStorage.getItem('user'));
       if(!User){
-        // navigate('/Login');
+         navigate('/Login');
       }else {
         axios.get("/api/get_users.php")
         .then(res => {
              const storedUsername = localStorage.getItem("username");
              const target = res.data.find(u => u.username === storedUsername);
-             setAllUsers(res.data);
+             setallUsers(res.data);
              if (target) {
                    setUser({ 
                        username: target.username,
@@ -49,7 +62,7 @@ function Home() {
       }
   }, [navigate]);
 
-  if(!isLoading){
+  if(isLoading){
     return null;
   } 
 
@@ -66,7 +79,7 @@ function Home() {
       case "Library":
         return <LibraryPage onBack={goBack} />;
       case "Profile":
-        return <ProfilePage onBack={goBack} user={user} allUsers = {allUsers}/>;
+        return <ProfilePage onBack={goBack} user={user} allUsers={allUsers} />;
       case "News":
         return <NewsMediaPage onBack={goBack} />;
       default:
@@ -74,10 +87,10 @@ function Home() {
         return (
           <>
             <div className="hero-section">
-              <h1 className="hero-title">Welcome back, {user.username || 'student'}</h1>
+              <h1 className="hero-title">Welcome back, {user.username || 'Student'}</h1>
               <p className="hero-subtitle">What would you like to do today?</p>
               
-              <div className="search-bar">
+              <div className="search-bar" style={{ position: 'relative' }}>
                 <Search size={20} color="#64748b" />
                 <input 
                   type="text" 
@@ -181,9 +194,10 @@ function Home() {
                     <span style={{ fontSize: '0.75rem', color: '#e11d48', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em', background: '#fff1f2', padding: '4px 8px', borderRadius: '4px' }}>Campus Update</span>
                     <h3 style={{ margin: '12px 0 0 0', fontSize: '1.1rem', lineHeight: '1.4', color: 'var(--text-main)' }}>New Engineering Lab Grand Opening</h3>
                   </div>
+                  </div>
                 </div>
               </div>
-            </div>
+
 
             <div style={{ height: '60px' }}></div>
           </>
