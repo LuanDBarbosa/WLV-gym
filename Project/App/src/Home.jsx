@@ -38,12 +38,12 @@ function Home() {
   useEffect(() => {
       const User = JSON.parse(sessionStorage.getItem('user'));
       if(!User){
-         navigate('/Login');
+        // navigate('/Login');
       }else {
         axios.get("/api/get_users.php")
         .then(res => {
              const storedUsername = localStorage.getItem("username");
-             const target = res.data.find(u => u.username === storedUsername);
+             const target = res.data.find(u => u.username === storedUsername || u.email == storedUsername);
              setallUsers(res.data);
              if (target) {
                    setUser({ 
@@ -62,7 +62,7 @@ function Home() {
       }
   }, [navigate]);
 
-  if(isLoading){
+  if(!isLoading){
     return null;
   } 
 
