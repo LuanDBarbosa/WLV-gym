@@ -38,7 +38,7 @@ function Home() {
   useEffect(() => {
       const User = JSON.parse(sessionStorage.getItem('user'));
       if(!User){
-        // navigate('/Login');
+         navigate('/Login');
       }else {
         axios.get("/api/get_users.php")
         .then(res => {
@@ -62,7 +62,7 @@ function Home() {
       }
   }, [navigate]);
 
-  if(!isLoading){
+  if(isLoading){
     return null;
   } 
 
