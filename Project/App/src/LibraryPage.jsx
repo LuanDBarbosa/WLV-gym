@@ -90,7 +90,7 @@ export default function LibraryPage({ onBack }) {
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-        <h2 style={{ fontSize: '1.4rem', margin: 0, color: '#0f172a' }}>Book Catalogue</h2>
+        <h2 style={{ fontSize: '1.4rem', margin: 0, color: 'var(--text-main)' }}>Book Catalogue</h2>
         <div className="filters" style={{ margin: 0, padding: 0 }}>
           {genres.map(genre => (
             <button key={genre} className={`filter-btn ${activeGenre === genre ? "active" : ""}`} onClick={() => setActiveGenre(genre)}>

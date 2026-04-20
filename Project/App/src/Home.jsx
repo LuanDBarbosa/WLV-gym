@@ -169,12 +169,12 @@ function Home() {
                 <h2 style={{ fontSize: '1.3rem', margin: 0, display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-main)' }}>
                   <Newspaper size={22} color="var(--primary-color)" /> News & Media
                 </h2>
-                <button className="text-btn" onClick={() => setActivePage("News")} style={{ padding: 0, fontWeight: '600', display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--primary-color)', background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '1rem' }}>
+                <button className="text-btn" onClick={() => setActivePage("News")} style={{ padding: 0, fontWeight: '600', display: 'flex', alignItem: 'center', gap: '4px', color: 'var(--primary-color)', background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '1rem' }}>
                   See All <ChevronRight size={18} />
                 </button>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: '20px' }}>
                 {/* News Card 1 */}
                 <div style={{ background: 'var(--card-bg)', borderRadius: '12px', border: '1px solid var(--border-color, #e2e8f0)', overflow: 'hidden', cursor: 'pointer', transition: 'transform 0.2s', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }} onClick={() => setActivePage("News")}>
                   <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=600" alt="News" style={{ width: '100%', height: '180px', objectFit: 'cover' }} />

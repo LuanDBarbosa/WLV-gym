@@ -787,6 +787,23 @@ hr {
   gap: 1rem;
 }
 
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--secondary-color);
+  cursor: pointer;
+  padding: 0;
+}
+
+.mobile-sidebar-header {
+  display: none;
+}
+
+.mobile-overlay {
+  display: none;
+}
+
 /* Global Utilities */
 .flex-center {
   display: flex;
@@ -1363,6 +1380,99 @@ input:checked + .slider:before {
     padding: 1rem;
   }
   
+  .hero-section {
+    padding: 2rem 1rem 1rem;
+  }
+  
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .header-left h1 {
+    font-size: 1.25rem;
+  }
+
+  .user-name-desktop {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100vh;
+    background-color: var(--card-bg);
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 0;
+    gap: 0;
+    box-shadow: var(--shadow-lg);
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+
+  .nav-links.mobile-open {
+    left: 0;
+  }
+
+  .nav-link {
+    border-radius: 0;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+    text-align: left;
+    width: 100%;
+  }
+  
+  .nav-link:hover, .nav-link.active {
+    border-radius: 0;
+  }
+
+  .mobile-sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+    background-color: var(--bg-color);
+  }
+
+  .mobile-sidebar-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--primary-color);
+  }
+
+  .mobile-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .mobile-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
+
   .lib-hero {
     padding: 2rem 1.5rem;
     border-radius: var(--radius-md);
