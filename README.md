@@ -8,7 +8,7 @@ The Student Hub is a web based application designed to improve student access to
 
 ## 🎯 Project Aim
 
-The aim of this project is to design and develop a user-friendly application that enhances student experience by:
+The aim of this project is to design and develop a user friendly application that enhances student experience by:
 
 * Centralising important services
 * Providing real time updates (e.g. gym capacity, bus times)
