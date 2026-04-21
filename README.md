@@ -2,7 +2,7 @@
 
 ## 📌 Overview
 
-The Student Hub is a web based application designed to improve student access to essential university services in one central platform. The app provides real-time information and easy navigation for key features such as the gym, library, student union events, and campus transport.
+The Student Hub is a web based application designed to improve student access to essential university services in one central platform. The app provides real time information and easy navigation for key features such as the gym, library, student union events, and campus transport.
 
 ---
 
@@ -22,7 +22,7 @@ The aim of this project is to design and develop a user-friendly application tha
 
 * Welcome interface for students
 * Search functionality for quick access
-* Quick-access cards:
+* Quick access cards:
 
   * Gym
   * Travel
@@ -50,7 +50,7 @@ The aim of this project is to design and develop a user-friendly application tha
 ### 📰 News & Media
 
 * Updates and announcements
-* Student-related content
+* Student related content
 
 ---
 
