@@ -67,6 +67,7 @@ The application was planned using wireframes to define layout, structure, and us
 * HTML
 * CSS
 * JavaScript
+* php
   
 
 ---
